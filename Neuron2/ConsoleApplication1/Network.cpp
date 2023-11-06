@@ -111,7 +111,6 @@ void Network::Forward(NW nw)
 
 void Network::BackPropogation(NW nw, double* a)
 {
-	double alpha = a[0];
 	for (int i = 0; i < L - 1; i++) {
 		Matrix::Multi(weights[i], neurons[i], size[i + 1], neurons[i + 1]);
 		Matrix::Sum(neurons[i + 1], bios[i], size[i + 1], bv[i], neurons[i + 1]);
@@ -121,6 +120,7 @@ void Network::BackPropogation(NW nw, double* a)
 		for (int j=0;j<size[i];j++){//берем на текущем слое jый нейрон
 			//корректируем ему веса
 			double s = neurons[i][j];
+			double alpha = neurons[i][j];
 			for (int k = 0; k < size[i - 1]; k++) {
 				if (i = L - 1) {
 					weights[i - 1].m[j][k] += alpha * 2 * (a[j] - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];

@@ -57,11 +57,13 @@ int main()
                 }
                 cout << "\n";
                 network.Forward(nw);
+                double answ = network.neurons[L - 1][0];
                 for (int k = 0; k < nw.size[L - 1]; k++) {
                     cout << network.neurons[L - 1][k] << "\n";
                 }
-                if (abs((network.neurons[1][0]-d[0]))>0.001)
+                if (abs((answ-d[0]))>0.001)
                 {
+                    cout << answ << " " << d[0] << "\n";
                     network.BackPropogation(nw, d);
                     network.SaveWeights();
                 }

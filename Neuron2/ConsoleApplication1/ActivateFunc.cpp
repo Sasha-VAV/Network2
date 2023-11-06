@@ -1,7 +1,7 @@
 #include "ActivateFunc.h"
 #include <iostream>
 void ActivateFunc::set() {
-	int a=1;
+	int a=2;
 	if (a == 0) {
 		std::cout << "Choose activation function\nOptions:\n1-Sigmoid\n2-Modified RELu\n3-Th\nPress and send number: ";
 		std::cin >> a;
