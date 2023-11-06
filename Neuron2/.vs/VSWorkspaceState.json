@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ConsoleApplication1"
   ],
-  "SelectedNode": "\\Neuron2.sln",
+  "SelectedNode": "\\ConsoleApplication1\\Network.cpp",
   "PreviewInSolutionExplorer": false
 }

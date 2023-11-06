@@ -32,7 +32,11 @@ void Network::Init(NW nw) {
 }
 
 void Network::Fill(NW nw) {
-	
+	std::ifstream fw;
+	fw.open("weights.txt");
+	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
+		fw >> weights[i];
+	}
 }
 
 void Network::SaveWeights()
