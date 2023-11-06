@@ -9,6 +9,7 @@ struct NW {
 };
 class Network//Боже, дай мне сил
 {
+public:
 	int L;
 	int* size;
 	ActivateFunc actF;
@@ -20,5 +21,9 @@ public:
 	void Init(NW nw);
 	void Fill(NW nw);
 	void SaveWeights();
-	void ReadWeights();		
+	void ReadWeights();
+	void Forward(NW nw);
+	void BackPropogation(NW nw, double* a);
+	void UpdateWeights(NW nw, int k, double* a);
+	void Activate(NW nw);
 };

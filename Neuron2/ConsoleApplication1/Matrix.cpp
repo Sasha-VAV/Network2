@@ -19,7 +19,7 @@ void Matrix::Init(int row, int col) {
 void Matrix::Rand() {
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
-			m[i][j] = rand()%100+30;
+			m[i][j] = 1/(rand()%100+i*30+j*66);
 		}
 	}
 }
@@ -33,19 +33,31 @@ void Matrix::PrintM() {
 	}
 	std::cout << "=============================\n";
 }
-void Matrix::PrintMfw()
-{
-	std::ofstream fout;
-	fout.open("weights.txt");
-	for (int j = 0; j < row; j++) {
-		for (int k = 0; k < col; k++) {
-			fout << m[j][k] << " ";
-		}
-		fout << "\n";
-	}
-	fout << "===============================\n";
-
-}
+//void Matrix::PrintMfw()
+//{
+//	std::ofstream fout;
+//	fout.open("weights.txt");
+//	for (int j = 0; j < row; j++) {
+//		for (int k = 0; k < col; k++) {
+//			fout << m[j][k] << " ";
+//		}
+//		fout << "\n";
+//	}
+//	//fout << "===============================\n";
+//	fout.close();
+//
+//}
+//void Matrix::ReadMfw()
+//{
+//	std::ifstream fin;
+//	fin.open("weights.txt");
+//	for (int j = 0; j < row; j++) {
+//		for (int k = 0; k < col; k++) {
+//			fin >> m[j][k];
+//		}
+//	}
+//	fin.close();
+//}
 void Matrix::PrintAll(const Matrix& a){
 	int i, j,ii,jj;
 	ii = a.col;
@@ -73,9 +85,9 @@ double** Matrix::Tm() {
 	return a;
 }
 void Matrix::Multi(const Matrix& a, double* b, int n, double* c) {
-	if (a.col != n) {
+	/*if (a.col != n) {
 		throw std::runtime_error("a.col!=n at Multi");
-	}
+	}*/
 	int i, j;
 	double d = 0;
 	for (i = 0; i < a.row; i++) {
@@ -86,8 +98,8 @@ void Matrix::Multi(const Matrix& a, double* b, int n, double* c) {
 		d = 0;
 	}
 }
-void Matrix::Sum(double* a, double* b, int n, double* c) {
+void Matrix::Sum(double* a, double* b, int n,double d, double* c) {
 	for (int i = 0; i < n; i++) {
-		c[i] = a[i] + b[i];
+		c[i] = a[i] + b[i]*d;
 	}
 }

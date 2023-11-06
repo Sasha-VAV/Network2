@@ -1,9 +1,11 @@
 #include "ActivateFunc.h"
 #include <iostream>
 void ActivateFunc::set() {
-	std::cout << "Choose activation function\nOptions:\n1-Sigmoid\n2-Modified RELu\n3-Th\nPress and send number: ";
-	int a;
-	std::cin >> a;
+	int a=1;
+	if (a == 0) {
+		std::cout << "Choose activation function\nOptions:\n1-Sigmoid\n2-Modified RELu\n3-Th\nPress and send number: ";
+		std::cin >> a;
+	}
 	switch (a)
 	{
 	case 1:
@@ -44,6 +46,33 @@ void ActivateFunc::F(double* a, int n) {
 			else
 				a[i] = (exp(a[i]) - exp(-a[i])) / (exp(a[i]) + exp(-a[i]));
 		}
+		break;
+	default:
+		throw std::runtime_error("Error in activationFunction\n");
+		break;
+	}
+}
+double ActivateFunc::f(double a)
+{
+	switch (actF) {
+	case actFunc::Sigm:
+			return 1 / (1 + exp(-a));
+		break;
+	case actFunc::ModRELu:
+			if (a < 0)
+				a *= 0.01;
+			else if (a > 1)
+				a = 1. + 0.01 * (a - 1.);
+			else
+				a = a;
+			return a;
+		break;
+	case actFunc::th:
+			if (a < 0)
+				a = 0.01 * (exp(a) - exp(-a)) / (exp(a) + exp(-a));
+			else
+				a = (exp(a) - exp(-a)) / (exp(a) + exp(-a));
+			return a;
 		break;
 	default:
 		throw std::runtime_error("Error in activationFunction\n");
