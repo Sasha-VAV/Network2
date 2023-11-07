@@ -44,7 +44,7 @@ void Network::Fill(NW nw) {
 void Network::SaveWeights()
 {
 	std::ofstream fw;
-	fw.open("weights.txt");
+	fw.open("weights.txt",ios::trunc);
 	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
 		for (int j = 0; j < weights[i].row; j++) {
 			for (int k = 0; k < weights[i].col; k++) {
@@ -120,7 +120,7 @@ void Network::BackPropogation(NW nw, double* a)
 		for (int j=0;j<size[i];j++){//берем на текущем слое jый нейрон
 			//корректируем ему веса
 			double s = neurons[i][j];
-			double alpha = neurons[i][j];
+			double alpha = 0.01;
 			for (int k = 0; k < size[i - 1]; k++) {
 				if (i = L - 1) {
 					weights[i - 1].m[j][k] += alpha * 2 * (a[j] - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];

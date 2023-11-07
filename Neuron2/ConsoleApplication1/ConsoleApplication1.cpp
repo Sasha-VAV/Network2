@@ -22,7 +22,7 @@ int main()
         nw.size[0] = 2;
         nw.size[1] = 1;
         network.Init(nw);
-        network.SaveWeights();
+        //network.SaveWeights();
         network.ReadWeights();
         //network.weights[0].PrintM();
         cout << "Insert neurons\n";
@@ -50,19 +50,24 @@ int main()
                 double* d;
                 d = new double[1];
                 f >> d[0];
-                cout << "Insert neurons\n";
+                if (jj-ii<16)
+                    cout << "Insert neurons\n";
                 for (int j = 0; j < nw.size[0]; j++) {
                     f >> network.neurons[0][j];
+                    if (jj - ii < 16)
                     cout<< network.neurons[0][j]<<" ";
                 }
+                if (jj - ii < 16)
                 cout << "\n";
                 network.Forward(nw);
                 double answ = network.neurons[L - 1][0];
                 for (int k = 0; k < nw.size[L - 1]; k++) {
+                    if (jj - ii < 16)
                     cout << network.neurons[L - 1][k] << "\n";
                 }
                 if (abs((answ-d[0]))>0.001)
                 {
+                    if (jj - ii < 16)
                     cout << answ << " " << d[0] << "\n";
                     network.BackPropogation(nw, d);
                     network.SaveWeights();
