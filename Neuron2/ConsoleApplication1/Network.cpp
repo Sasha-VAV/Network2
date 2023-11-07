@@ -121,22 +121,14 @@ void Network::BackPropogation(NW nw, double* a)
 			//корректируем ему веса
 			double s = neurons[i][j];
 			double alpha = 0.01;
+			double correct = a[j];
 			for (int k = 0; k < size[i - 1]; k++) {
-				if (i = L - 1) {
-					weights[i - 1].m[j][k] += alpha * 2 * (a[j] - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
-					
-				}
-				else {
-					weights[i - 1].m[j][k] += alpha * 2 * (neurons[i+1][j] - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
-				}
+				if (i==L-1)
+					weights[i - 1].m[j][k] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
+				else if (i==L-2)
+					weights[i - 1].m[j][k] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
 			}
-			if (i = L - 1) {
-				bios[i-1][j] += alpha * 2 * (a[j] - actF.f(s)) * actF.dF(s);
-
-			}
-			else {
-				bios[i][j] += alpha * 2 * (neurons[i + 1][j] - actF.f(s)) * actF.dF(s);
-			}
+			bios[i-1][j] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s);
 		}
 		
 	}

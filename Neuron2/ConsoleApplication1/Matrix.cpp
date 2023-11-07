@@ -20,7 +20,7 @@ void Matrix::Rand() {
 	srand(time(NULL));
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
-			double d = rand() %67 + 1;
+			double d = rand()%131231 + 103213;
 			//std::cout << d << "\n";
 			m[i][j] = 1/(d);
 		}
