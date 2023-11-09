@@ -44,18 +44,18 @@ void Network::Fill(NW nw) {
 void Network::SaveWeights()
 {
 	std::ofstream fw;
-	fw.open("weights.txt",ios::trunc);
+	fw.open("weights.txt", ios::trunc);
 	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
 		for (int j = 0; j < weights[i].row; j++) {
 			for (int k = 0; k < weights[i].col; k++) {
-				fw << weights[i].m[j][k]<<" ";
+				fw << weights[i].m[j][k] << " ";
 			}
 			fw << "\n";
 		}
 		fw << "\n\n";
 	}
 	for (int i = 0; i < L - 1; i++) {
-		for (int j = 0; j < size[i+1]; j++) {
+		for (int j = 0; j < size[i + 1]; j++) {
 			fw << bios[i][j] << " ";
 		}
 		fw << "\n";
@@ -75,7 +75,7 @@ void Network::ReadWeights() {
 			}
 		}
 	}
-	
+
 	for (int i = 0; i < L - 1; i++) {
 		for (int j = 0; j < L - 1; j++) {
 			fw >> bios[i][j];
@@ -96,7 +96,7 @@ void Network::Forward(NW nw)
 		cout << "\n";
 	}*/
 	for (int i = 0; i < L - 1; i++) {
-		Matrix::Multi(weights[i], neurons[i], size[i+1], neurons[i+1]);
+		Matrix::Multi(weights[i], neurons[i], size[i + 1], neurons[i + 1]);
 		Matrix::Sum(neurons[i + 1], bios[i], size[i + 1], bv[i], neurons[i + 1]);
 		actF.F(neurons[i + 1], size[i + 1]);
 	}
@@ -116,24 +116,24 @@ void Network::BackPropogation(NW nw, double* a)
 		Matrix::Sum(neurons[i + 1], bios[i], size[i + 1], bv[i], neurons[i + 1]);
 	}
 	for (int i = L - 1; i > 0; i--) {//идти с конца
-		
-		for (int j=0;j<size[i];j++){//берем на текущем слое jый нейрон
+
+		for (int j = 0; j < size[i]; j++) {//берем на текущем слое jый нейрон
 			//корректируем ему веса
 			double s = neurons[i][j];
-			double alpha = 0.01;
+			double alpha = 0.00001;
 			double correct = a[j];
 			for (int k = 0; k < size[i - 1]; k++) {
-				if (i==L-1)
+				if (i == L - 1)
 					weights[i - 1].m[j][k] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
-				else if (i==L-2)
+				else if (i == L - 2)
 					weights[i - 1].m[j][k] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s) * neurons[i - 1][k];
 			}
-			bios[i-1][j] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s);
+			bios[i - 1][j] += alpha * 2 * (correct - actF.f(s)) * actF.dF(s);
 		}
-		
+
 	}
-	
-	
+
+
 }
 
 void Network::Activate(NW nw)
@@ -145,7 +145,7 @@ void Network::Activate(NW nw)
 
 void Network::UpdateWeights(NW nw, int k, double* d)
 {
-	for (int i = 0; i < L-1; i++) {
+	for (int i = 0; i < L - 1; i++) {
 		for (int j = 0; j < size[i]; j++) {
 			//weights[k].m[i][j] = -2 * (d[i]) * actF.dF(neurons[i]);
 		}
