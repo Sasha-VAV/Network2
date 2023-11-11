@@ -1,4 +1,4 @@
 ﻿  ConsoleApplication1.cpp
 C:\Users\vav11\Git\Network2\Neuron2\ConsoleApplication1\ConsoleApplication1.cpp(10,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\vav11\Git\Network2\Neuron2\ConsoleApplication1\ConsoleApplication1.cpp(146): warning C4723: возможное деление на 0
+C:\Users\vav11\Git\Network2\Neuron2\ConsoleApplication1\ConsoleApplication1.cpp(174): warning C4723: возможное деление на 0
   ConsoleApplication1.vcxproj -> C:\Users\vav11\Git\Network2\Neuron2\x64\Debug\ConsoleApplication1.exe

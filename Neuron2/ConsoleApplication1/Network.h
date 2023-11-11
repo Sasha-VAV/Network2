@@ -21,6 +21,8 @@ public:
 	void Init(NW nw);
 	void Fill(NW nw);
 	void SaveWeights();
+	void SaveWeightsBackup();
+	void SaveWeightsBackupAE();
 	void ReadWeights();
 	void Forward(NW nw);
 	void BackPropogation(NW nw, double* a);

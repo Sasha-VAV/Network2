@@ -12,8 +12,15 @@ int main()
 	bool ok = true;
 	int aaa = 4;
 	int learnact = 2;
-	int numoflearns = 100;
-	int numoftests = numoflearns/4;
+	int numoflearns = 0;
+	int numoftests = 25000;
+	ifstream fc;
+	fc.open("network cfg.txt");
+	double min_err;
+	fc >> min_err;
+	double min_act_err;
+	fc >> min_act_err;
+	fc.close();
 	while (ok) {
 		std::cout << "LET'S GO!\n";
 		NW nw{};
@@ -91,10 +98,11 @@ int main()
 				f.open("Dogs.txt");
 				double err = 0;
 				double kpd = 1;
+				double fact_err = 0;
 				for (int i = 0; i < numoflearns; i++)
 				{
 					if (i % 25 == 0 and i!=0) {
-						cout << "epoch: " << ii << " current image " << i << " kpd: " << kpd << " err: " << err*100/i << "\n";
+						cout << "epoch: " << ii << " current image " << i << " kpd: " << kpd << " err: " << err*100/i << " factical error: "<<fact_err*100/i<<"\n";
 					}
 					network.ReadWeights();
 
@@ -124,7 +132,18 @@ int main()
 					double answ = network.neurons[L - 1][0];
 					kpd -= abs(answ - d[0]);
 					err += abs(answ - d[0]);
-
+					if (answ < 0.5) {
+						if (d[0] == 1)
+						{
+							fact_err += 1;
+						}
+					}
+					else {
+						if (d[0] == 0)
+						{
+							fact_err += 1;
+						}
+					}
 
 					/*for (int k = 0; k < nw.size[L - 1]; k++) {
 						if (jj - ii < 16)
@@ -137,17 +156,28 @@ int main()
 						network.BackPropogation(nw, d);
 						network.SaveWeights();
 					}
+					
 
 				}
-				if (err * 100 / numoflearns < 0.1) {
-					cout << "epoch: " << ii << " kpd: " << kpd << " err: " << err * 100 / numoflearns << "\n";
+				if (err * 100 / numoflearns <= min_err) {
+					min_err = err * 100 / numoflearns;
+					network.SaveWeightsBackup();
+					ofstream fwc;
+					fwc.open("network cfg.txt", ios::trunc);
+					fwc << min_err << " " << min_act_err;
+					fwc.close();
+				}
+				if (err * 100 / numoflearns < 0.1 or (numoftests+numoflearns)>25000) {
+					cout << "epoch: " << ii << " kpd: " << kpd << " err: " << err * 100 / numoflearns  << "\n";
 					cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nLEARNING COMPLETED\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 					cin >> err;
 					err = err / 0;
 				}
-				cout << "epoch: " << ii << " kpd: " << kpd << " err: " << err*100/numoflearns << "\n";
+				cout << "epoch: " << ii << " kpd: " << kpd << " err: " << err*100 / numoflearns << " factical error " << fact_err *100 / numoflearns << "\n";
 				kpd = 1;
 				err = 0;
+				fact_err = 0;
+				
 				for (int i = 0; i < numoftests; i++) {
 					for (int j = 0; j < nw.size[0]; j++) {
 						f >> network.neurons[0][j];
@@ -162,9 +192,28 @@ int main()
 					double answ = network.neurons[L - 1][0];
 					kpd -= abs(answ - d[0]);
 					err += abs(answ - d[0]);
+					if (answ < 0.5) {
+						if (d[0] == 1)
+							fact_err += 1;
+					}
+					else {
+						if (d[0] == 0)
+							fact_err += 1;
+					}
 				}
-				cout << "epoch: " << ii << " TEST:: kpd: " << kpd << " err: " << err * 100 / numoftests << "\n";
+				cout << "epoch: " << ii << " TEST:: NUMOFTESTS "<< numoftests<< " kpd: " << kpd << " err: " << err * 100 / numoftests << " factical error: "<<fact_err*100/numoftests<<"\n";
 				f.close();
+				if (fact_err * 100 / numoftests <= min_act_err) {
+					min_act_err = fact_err * 100 / numoftests;
+					network.SaveWeightsBackupAE();
+					ofstream fwc;
+					fwc.open("network cfg.txt", ios::trunc);
+					fwc << min_err << " " << min_act_err;
+					fwc.close();
+					if (min_act_err == 0) {
+						numoftests *= 2;
+					}
+				}
 				
 			}
 		}

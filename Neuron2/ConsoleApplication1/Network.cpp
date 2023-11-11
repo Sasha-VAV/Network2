@@ -65,6 +65,97 @@ void Network::SaveWeights()
 	}
 	fw.close();
 }
+void Network::SaveWeightsBackup()
+{
+	std::ofstream f1;
+	std::ofstream f2;
+	f1.open("weights1.txt", ios::trunc);
+	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
+		for (int j = 0; j < weights[i].row; j++) {
+			for (int k = 0; k < weights[i].col; k++) {
+				f1 << weights[i].m[j][k] << " ";
+			}
+			f1 << "\n";
+		}
+		f1 << "\n\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		for (int j = 0; j < size[i + 1]; j++) {
+			f1 << bios[i][j] << " ";	
+		}
+		f1 << "\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		f1 << bv[i] << " ";
+	}
+	f1.close();
+	f2.open("weights2.txt", ios::trunc);
+	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
+		for (int j = 0; j < weights[i].row; j++) {
+			for (int k = 0; k < weights[i].col; k++) {
+				f2 << weights[i].m[j][k] << " ";
+			}
+			f2 << "\n";
+		}
+		f2 << "\n\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		for (int j = 0; j < size[i + 1]; j++) {
+			f2 << bios[i][j] << " ";
+		}
+		f2 << "\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		f2 << bv[i] << " ";
+	}
+	f2.close();
+
+}
+void Network::SaveWeightsBackupAE()
+{
+	std::ofstream f1;
+	std::ofstream f2;
+	f1.open("weightsAE1.txt", ios::trunc);
+	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
+		for (int j = 0; j < weights[i].row; j++) {
+			for (int k = 0; k < weights[i].col; k++) {
+				f1 << weights[i].m[j][k] << " ";
+			}
+			f1 << "\n";
+		}
+		f1 << "\n\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		for (int j = 0; j < size[i + 1]; j++) {
+			f1 << bios[i][j] << " ";
+		}
+		f1 << "\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		f1 << bv[i] << " ";
+	}
+	f1.close();
+	f2.open("weightsAE2.txt", ios::trunc);
+	for (int i = 0; i < L - 1; i++) {//заполнение массива весов и смещений рандомными числами
+		for (int j = 0; j < weights[i].row; j++) {
+			for (int k = 0; k < weights[i].col; k++) {
+				f2 << weights[i].m[j][k] << " ";
+			}
+			f2 << "\n";
+		}
+		f2 << "\n\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		for (int j = 0; j < size[i + 1]; j++) {
+			f2 << bios[i][j] << " ";
+		}
+		f2 << "\n";
+	}
+	for (int i = 0; i < L - 1; i++) {
+		f2 << bv[i] << " ";
+	}
+	f2.close();
+}
 void Network::ReadWeights() {
 	std::ifstream fw;
 	fw.open("weights.txt");
